@@ -399,12 +399,12 @@
                 
                 <div class="form-group">
                     <label class="form-label">Full Name</label>
-                    <input type="text" class="form-input" placeholder="e.g. Rahul Sharma" required>
+                    <input type="text" id="name" class="form-input" placeholder="e.g. Rahul Sharma" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Phone Number</label>
-                    <input type="tel" class="form-input" placeholder="e.g. +91 98765 43210" required>
+                    <input type="tel" id="phone" class="form-input" placeholder="e.g. +91 98765 43210" required>
                 </div>
 
                 <div class="form-group">
@@ -420,7 +420,7 @@
 
                 <div class="form-group">
                     <label class="form-label">Custom Note</label>
-                    <textarea class="form-textarea" rows="3" placeholder="Any specific requirements? (e.g. 'I will email my logo later')"></textarea>
+                    <textarea id="note" class="form-textarea" rows="3" placeholder="Any specific requirements? (e.g. 'I will email my logo later')"></textarea>
                 </div>
 
                 <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">Submit Request</button>
@@ -431,10 +431,19 @@
     <footer>
         <p>&copy; 2026 Tapzy NFC. All rights reserved.</p>
         <div style="margin-top: 20px; font-size: 1.5rem;">
-            <i class="fab fa-instagram" style="margin: 0 10px; cursor: pointer;"></i>
-            <i class="fab fa-linkedin" style="margin: 0 10px; cursor: pointer;"></i>
-            <i class="fab fa-twitter" style="margin: 0 10px; cursor: pointer;"></i>
-        </div>
+    <a href="https://instagram.com/tapzynfc" target="_blank">
+        <i class="fab fa-instagram" style="margin: 0 10px;"></i>
+    </a>
+
+    <a href="https://linkedin.com/in/arnavkaushxl" target="_blank">
+        <i class="fab fa-linkedin" style="margin: 0 10px;"></i>
+    </a>
+
+    <a href="https://wa.me/919876543210?text=Hi%20I%20want%20to%20order%20a%20Tapzy%20card" target="_blank">
+            <i class="fab fa-whatsapp" style="margin: 0 10px; cursor: pointer; color:#25D366;"></i>
+        </a>
+</div>
+
     </footer>
 
     <script>
@@ -473,9 +482,33 @@
 
         // 4. Mock Submit
         function submitForm(e) {
-            e.preventDefault();
-            alert("Thanks! Your order details have been captured. We will call you shortly.");
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        card: document.getElementById("cardSelector").value,
+        note: document.getElementById("note").value
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbwhdQqqoIXNOV16I0bDYmu1Jfl58QviSX04sam0M9ilM2IL1sFp0e5Go836oBbbghTrSQ/exec", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json"
         }
+    })
+    .then(res => res.text())
+    .then(() => {
+        alert("Order submitted successfully! We will contact you soon.");
+        document.getElementById("orderForm").reset();
+    })
+    .catch(err => {
+        alert("Error submitting form");
+        console.error(err);
+    });
+}
+
 
         // Trigger reveal on load
         reveal();
