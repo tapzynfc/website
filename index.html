@@ -484,29 +484,32 @@
         function submitForm(e) {
     e.preventDefault();
 
+    const form = document.getElementById("orderForm");
+
     const data = {
-        name: document.getElementById("name").value,
-        phone: document.getElementById("phone").value,
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
         card: document.getElementById("cardSelector").value,
-        note: document.getElementById("note").value
+        note: document.getElementById("note").value.trim()
     };
+
+    // Basic validation
+    if (!data.name || !data.phone || !data.card) {
+        alert("Please fill all required fields.");
+        return;
+    }
 
     fetch("https://script.google.com/macros/s/AKfycbwhdQqqoIXNOV16I0bDYmu1Jfl58QviSX04sam0M9ilM2IL1sFp0e5Go836oBbbghTrSQ/exec", {
         method: "POST",
-        body: JSON.stringify(data),
+        mode: "no-cors",   // Important for Google Script
         headers: {
             "Content-Type": "application/json"
-        }
-    })
-    .then(res => res.text())
-    .then(() => {
-        alert("Order submitted successfully! We will contact you soon.");
-        document.getElementById("orderForm").reset();
-    })
-    .catch(err => {
-        alert("Error submitting form");
-        console.error(err);
+        },
+        body: JSON.stringify(data)
     });
+
+    alert("Order submitted! We will contact you on WhatsApp.");
+    form.reset();
 }
 
 
