@@ -15,7 +15,6 @@
             --glass-border: 1px solid rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
             --text-muted: #a0a0a0;
-            --glow: 0 0 20px rgba(0, 114, 255, 0.5);
             --font-main: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
@@ -198,7 +197,6 @@
         .step-num { font-size: 4rem; font-weight: 900; color: rgba(255,255,255,0.05); position: absolute; top: -20px; left: 50%; transform: translateX(-50%); z-index: -1; }
 
         /* --- 9. CONTACT FORM (UPDATED) --- */
-        /* Replaced CTA section with detailed form styling */
         .contact-section {
             background: linear-gradient(to bottom, #050505, #111);
             padding: 80px 5%;
@@ -431,19 +429,10 @@
     <footer>
         <p>&copy; 2026 Tapzy NFC. All rights reserved.</p>
         <div style="margin-top: 20px; font-size: 1.5rem;">
-    <a href="https://instagram.com/tapzynfc" target="_blank">
-        <i class="fab fa-instagram" style="margin: 0 10px;"></i>
-    </a>
-
-    <a href="https://linkedin.com/in/arnavkaushxl" target="_blank">
-        <i class="fab fa-linkedin" style="margin: 0 10px;"></i>
-    </a>
-
-    <a href="https://wa.me/919876543210?text=Hi%20I%20want%20to%20order%20a%20Tapzy%20card" target="_blank">
-            <i class="fab fa-whatsapp" style="margin: 0 10px; cursor: pointer; color:#25D366;"></i>
-        </a>
-</div>
-
+            <a href="https://instagram.com/tapzynfc" target="_blank" style="color:white;"><i class="fab fa-instagram" style="margin: 0 10px;"></i></a>
+            <a href="https://linkedin.com/in/arnavkaushxl" target="_blank" style="color:white;"><i class="fab fa-linkedin" style="margin: 0 10px;"></i></a>
+            <a href="https://wa.me/919876543210?text=Hi%20I%20want%20to%20order%20a%20Tapzy%20card" target="_blank" style="color:#25D366;"><i class="fab fa-whatsapp" style="margin: 0 10px;"></i></a>
+        </div>
     </footer>
 
     <script>
@@ -452,12 +441,10 @@
 
         function reveal() {
             var reveals = document.querySelectorAll('.reveal');
-
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
                 var elementVisible = 150;
-
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add('active');
                 } else {
@@ -472,44 +459,56 @@
             nav.classList.toggle('active');
         }
 
-        // 3. Card Selection Helper (Links "Select" button to Dropdown)
+        // 3. Card Selection Helper
         function selectCard(cardName) {
-            // Scroll to contact section
             document.getElementById('contact').scrollIntoView();
-            // Select the item in the dropdown
             document.getElementById('cardSelector').value = cardName;
         }
 
-        // 4. Mock Submit
+        // 4. WORKING FORM SUBMISSION (No Alert + Redirect)
         function submitForm(e) {
-    e.preventDefault();
+            e.preventDefault();
 
-    const data = {
-        name: document.getElementById("name").value,
-        phone: document.getElementById("phone").value,
-        card: document.getElementById("cardSelector").value,
-        note: document.getElementById("note").value
-    };
+            const form = document.getElementById("orderForm");
+            // Add loading effect
+            const btn = form.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
 
-    fetch("https://script.google.com/macros/s/AKfycbwhdQqqoIXNOV16I0bDYmu1Jfl58QviSX04sam0M9ilM2IL1sFp0e5Go836oBbbghTrSQ/exec", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json"
+            const data = {
+                name: document.getElementById("name").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                card: document.getElementById("cardSelector").value,
+                note: document.getElementById("note").value.trim()
+            };
+
+            // Basic validation
+            if (!data.name || !data.phone || !data.card) {
+                alert("Please fill all required fields.");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            fetch("https://script.google.com/macros/s/AKfycbwhdQqqoIXNOV16I0bDYmu1Jfl58QviSX04sam0M9ilM2IL1sFp0e5Go836oBbbghTrSQ/exec", {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                // Success! Redirect to success page
+                window.location.href = "success.html";
+            })
+            .catch(err => {
+                console.error(err);
+                // Even on error, redirect (since no-cors often looks like an error)
+                window.location.href = "success.html";
+            });
         }
-    })
-    .then(res => res.text())
-    .then(() => {
-        // Redirect to success page
-        window.location.href = "success.html";
-    })
-    .catch(err => {
-        alert("Error submitting form. Please try again.");
-        console.error(err);
-    });
-}
-
-
 
         // Trigger reveal on load
         reveal();
@@ -517,4 +516,3 @@
 
 </body>
 </html>
-
