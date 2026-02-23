@@ -4,50 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order Successful | Tapzy</title>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#050505;
-    color:white;
-    font-family:Arial, sans-serif;
-    text-align:center;
-}
-
-.box{
-    background:rgba(255,255,255,0.05);
-    padding:40px;
-    border-radius:15px;
-    border:1px solid rgba(255,255,255,0.1);
-}
-
-h1{
-    color:#00C6FF;
-}
-
-a{
-    display:inline-block;
-    margin-top:20px;
-    padding:12px 25px;
-    background:linear-gradient(135deg,#00C6FF,#0072FF);
-    color:white;
-    text-decoration:none;
-    border-radius:30px;
-}
+    body{
+        margin:0; height:100vh; display:flex; justify-content:center; align-items:center;
+        background:#050505; color:white; font-family:'Inter', sans-serif; text-align:center;
+    }
+    .box{
+        background:rgba(255,255,255,0.05); padding:50px; border-radius:20px;
+        border:1px solid rgba(255,255,255,0.1); max-width: 400px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 30px rgba(0, 198, 255, 0.1);
+        animation: popIn 0.5s ease-out;
+    }
+    h1{
+        background: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+    }
+    p { color: #a0a0a0; line-height: 1.6; margin-bottom: 30px; }
+    a{
+        display:inline-block; padding:12px 30px;
+        background:linear-gradient(135deg,#00C6FF,#0072FF);
+        color:white; text-decoration:none; border-radius:50px; font-weight: bold;
+        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+    }
+    a:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 114, 255, 0.5); }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 </style>
 </head>
-
 <body>
-
-<div class="box">
-    <h1>Order Placed Successfully!</h1>
-    <p>We will contact you soon regarding your Tapzy card.</p>
-    <a href="index.html">Back to Home</a>
-</div>
-
+    <div class="box">
+        <i class="fas fa-check-circle" style="font-size: 4rem; color: #00C6FF; margin-bottom: 20px;"></i>
+        <h1>Order Received!</h1>
+        <p>Thank you for choosing Tapzy. Our team will contact you shortly to confirm your customization details.</p>
+        <a href="index.html">Back to Home</a>
+    </div>
 </body>
 </html>
