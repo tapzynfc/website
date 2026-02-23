@@ -167,7 +167,7 @@
         .feature-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.1); border-color: #00C6FF; }
         .feature-icon { font-size: 2.5rem; margin-bottom: 20px; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* --- 7. PRODUCTS (UPDATED) --- */
+        /* --- 7. PRODUCTS --- */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; }
         .product-card {
             background: #111; border-radius: 20px; overflow: hidden;
@@ -178,10 +178,8 @@
         .p-image {
             height: 250px; background: #222; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
         }
-        /* Simulated Product Materials via CSS pseudo-elements */
         .p-image::after { content: ''; position: absolute; width: 150px; height: 240px; border-radius: 10px; transform: rotate(-15deg); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         
-        /* Specific Styles for new cards */
         .p-metal::after { background: linear-gradient(135deg, #bdc3c7, #2c3e50); border: 1px solid #777; }
         .p-matte::after { background: #1a1a1a; border: 1px solid #333; }
         .p-white::after { background: #f5f5f5; border: 1px solid #ccc; }
@@ -196,7 +194,7 @@
         .step-box { position: relative; width: 300px; }
         .step-num { font-size: 4rem; font-weight: 900; color: rgba(255,255,255,0.05); position: absolute; top: -20px; left: 50%; transform: translateX(-50%); z-index: -1; }
 
-        /* --- 9. CONTACT FORM (UPDATED) --- */
+        /* --- 9. CONTACT FORM --- */
         .contact-section {
             background: linear-gradient(to bottom, #050505, #111);
             padding: 80px 5%;
@@ -266,7 +264,7 @@
                 <p>The last business card you will ever buy. Share your contact info, social media, and payments instantly with a single tap.</p>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; md:justify-content: flex-start;">
                     <a href="#products" class="btn btn-primary">Shop Cards <i class="fas fa-arrow-right"></i></a>
-                    <a href="#demo" class="btn btn-outline">Watch Demo</a>
+                    <a href="demo.html" class="btn btn-outline">Watch Demo</a>
                 </div>
             </div>
             
@@ -465,12 +463,12 @@
             document.getElementById('cardSelector').value = cardName;
         }
 
-        // 4. WORKING FORM SUBMISSION (No Alert + Redirect)
+        // 4. WORKING FORM SUBMISSION
         function submitForm(e) {
             e.preventDefault();
 
             const form = document.getElementById("orderForm");
-            // Add loading effect
+            
             const btn = form.querySelector('button');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
@@ -483,7 +481,6 @@
                 note: document.getElementById("note").value.trim()
             };
 
-            // Basic validation
             if (!data.name || !data.phone || !data.card) {
                 alert("Please fill all required fields.");
                 btn.innerHTML = originalText;
@@ -500,19 +497,15 @@
                 body: JSON.stringify(data)
             })
             .then(() => {
-                // Success! Redirect to success page
                 window.location.href = "success.html";
             })
             .catch(err => {
                 console.error(err);
-                // Even on error, redirect (since no-cors often looks like an error)
                 window.location.href = "success.html";
             });
         }
 
-        // Trigger reveal on load
         reveal();
     </script>
-
 </body>
 </html>
